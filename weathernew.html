@@ -12,18 +12,31 @@ $(document).ready(function(){
             var sTxt = '';
 			var count = result.cnt;
 			for(i=0;i<count;i++){
+				//var date = new Date(result.list[i].dt);
 				sTxt += '<tr>';
-				sTxt += '<td>' +  "Date:" +result.list[i].dt
-				+"<div><table><tbody><tr><td>Temperature(*F): </td><td>"+result.list[i].main.temp
-				+"</td></tr><tr><td>Min:</td><td>"+result.list[i].main.temp_min
-				+"</td></tr><tr><td>Max:</td><td>"+result.list[i].main.temp_max
-				+"</td></tr></tbody></table></div>\nPressure:"+result.list[i].main.pressure
-				+"\nSea Level:"+result.list[i].main.sea_level
-				+"\nGround Level:"+result.list[i].main.grnd_level
-				+'</td>';
-				sTxt += '</tr>';
+				sTxt += '<td>' + result.list[i].dt_txt + '</td>';
+				sTxt += '<td>' + "<div><table><tbody><tr><td>Temperature(*F): </td><td>"+result.list[i].main.temp
+				+ "</td></tr><tr><td>Min:</td><td>"+result.list[i].main.temp_min
+				+ "</td></tr><tr><td>Max:</td><td>"+result.list[i].main.temp_max
+				+ "</td></tr></tbody></table></div><div><table><tbody><tr><td>Pressure:"+result.list[i].main.pressure
+				+ "</td><td>Sea Level:"+result.list[i].main.sea_level
+				+ "</td><td>Ground Level:"+result.list[i].main.grnd_level
+				+ '</td></tr></tbody></table></div>';
+				//sTxt += '</tr>';
+				
+				sTxt += '<td><div><table><tbody><tr><td>Weather:</td></tr>';
+				sTxt += '<tr><td>' +  "Looks like:</td><td>" + result.list[i].weather[0].main + "</td></tr>";
+				sTxt += '<tr><td>' +  "Description:</td><td>" + result.list[i].weather[0].description + "</td><td>" + result.list[i].weather[0].icon + "</td></tr></tbody></table></div></td>";
+				
+				sTxt += '<td><div><table><tbody><tr><td>Clouds:</td>';
+				sTxt += '<td>' + result.list[i].clouds.all + ' + </td>';
+				sTxt += '</tr></tbody></table></div></td>';
 
-
+				sTxt += '<td><div><table><tbody><tr><td>Winds:</td>';
+				sTxt += '<td>Speed:</td><td>' + result.list[i].wind.speed + '</td></tr>';
+				sTxt += '<td></td><td>Degree:</td><td>' + result.list[i].wind.deg + '</td></tr>';
+				sTxt += '</tr></tbody></table></div></td>';
+				
 				 }
 
 
@@ -41,14 +54,7 @@ ISO <input type="text" id="ISO" name="ISO" value="" />
 				<div>
 				</div>
 				<table id="weatherlist">
-					<tr>
-
-						<th>COD</th>
-						<th>MESSAGE</th>
-						<th>CNT</th>
-						<th>[DT,MAIN[TEMP,TEMP_MIN]]</th>
-
-					</tr>
+					
 				</table>
 
 			</body>
