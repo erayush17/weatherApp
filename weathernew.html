@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+	var country= $("#Country").val();
+	var country= $("#ISO").val();
+	alert(country);
+        $.getJSON("http://samples.openweathermap.org/data/2.5/forecast?q={country},{iso}&appid=b1b15e88fa797225412429c1c50c122a1", function(result){
+            var sTxt = '';
+			
+			for(i=0;i<=4;i++){
+             sTxt += '<tr>';
+sTxt += '<td>' +  result.cod+'</td>';
+sTxt += '<td>' +  result.message+'</td>';
+sTxt += '<td>' +  result.cnt+'</td>';
+sTxt += '<td>' +  "[" +result.list[i].dt+",Main["+result.list[i].main.temp+","+result.list[i].main.temp_min+"]"+"]"+'</td>';
+sTxt += '</tr>';
+				
+				 
+				 }
+				 
+           
+			 $('#weatherlist').append(sTxt);
+        });
+    });
+});
+</script>
+</head>
+<body>
+Country <input type="text" id="Country" name="Country" value="" />
+ISO <input type="text" id="ISO" name="ISO" value="" />
+<button>Get JSON data</button>
+
+<div>
+</div>
+ <table id="weatherlist">
+                    <tr>
+					
+                        <th>COD</th>
+                        <th>MESSAGE</th>
+                        <th>CNT</th>
+                        <th>[DT,MAIN[TEMP,TEMP_MIN]]</th>
+                       
+                    </tr>
+                </table>
+
+</body>
+</html>
