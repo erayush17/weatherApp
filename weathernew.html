@@ -2,57 +2,66 @@
 <html>
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+		<style type="text/css">
+
+td tr
+{
+	font-family: "Times New Roman", Times, serif;
+}
+
+
+		</style>
 		<script>
-$(document).ready(function(){
+	$(document).ready(function(){
     $("button").click(function(){
+	var city= $("#City").val();
 	var country= $("#Country").val();
-	var iso= $("#ISO").val();
-	alert(country);
-	$.getJSON("http://samples.openweathermap.org/data/2.5/forecast?q={country},{iso}&appid=b1b15e88fa797225412429c1c50c122a1", function(result){
+	$.getJSON("http://samples.openweathermap.org/data/2.5/forecast?q={city},{country}&appid=b1b15e88fa797225412429c1c50c122a1", function(result){
             var sTxt = '';
+			sTxt = '<tr><td style="font-family: Arial, Helvetica, sans-serif; font-size: 24px;"> Showing weather report for ' + city + ', ' + country + '</td></tr>';
 			var count = result.cnt;
 			for(i=0;i<count;i++){
 				//var date = new Date(result.list[i].dt);
-				sTxt += '<tr>';
-				sTxt += '<td>' + result.list[i].dt_txt + '</td>';
-				sTxt += '<td>' + "<div><table><tbody><tr><td>Temperature(*F): </td><td>"+result.list[i].main.temp
-				+ "</td></tr><tr><td>Min:</td><td>"+result.list[i].main.temp_min
-				+ "</td></tr><tr><td>Max:</td><td>"+result.list[i].main.temp_max
+				sTxt += '<tr bgcolor="#c8c8c8">';
+				sTxt += '<td style="font-family: Arial, Helvetica, sans-serif; font-size: 18px;">' + result.list[i].dt_txt + '</td>';
+				sTxt += '<td>' + "<div><table><tbody><tr><td>Temperature(*F): </td><td style='font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;'>"+result.list[i].main.temp
+				+ "</td></tr><tr><td>Min:</td><td style='font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;'>"+result.list[i].main.temp_min
+				+ "</td></tr><tr><td>Max:</td><td style='font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;'>"+result.list[i].main.temp_max
 				+ "</td></tr></tbody></table></div><div><table><tbody><tr><td>Pressure:"+result.list[i].main.pressure
 				+ "</td><td>Sea Level:"+result.list[i].main.sea_level
 				+ "</td><td>Ground Level:"+result.list[i].main.grnd_level
 				+ '</td></tr></tbody></table></div>';
-				//sTxt += '</tr>';
 				
 				sTxt += '<td><div><table><tbody><tr><td>Weather:</td></tr>';
-				sTxt += '<tr><td>' +  "Looks like:</td><td>" + result.list[i].weather[0].main + "</td></tr>";
-				sTxt += '<tr><td>' +  "Description:</td><td>" + result.list[i].weather[0].description + "</td><td>" + result.list[i].weather[0].icon + "</td></tr></tbody></table></div></td>";
+				sTxt += '<tr><td>' +  "Looks like:</td><td style='font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;'>" + result.list[i].weather[0].main + "</td></tr>";
+				sTxt += '<tr><td>' +  "Description:</td><td style='font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;'>" + result.list[i].weather[0].description + "</td></tr></tbody></table></div></td>";
 				
 				sTxt += '<td><div><table><tbody><tr><td>Clouds:</td>';
-				sTxt += '<td>' + result.list[i].clouds.all + ' + </td>';
+				sTxt += '<td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;">' + result.list[i].clouds.all + '</td>';
 				sTxt += '</tr></tbody></table></div></td>';
 
 				sTxt += '<td><div><table><tbody><tr><td>Winds:</td>';
-				sTxt += '<td>Speed:</td><td>' + result.list[i].wind.speed + '</td></tr>';
-				sTxt += '<td></td><td>Degree:</td><td>' + result.list[i].wind.deg + '</td></tr>';
+				sTxt += '<td>Speed:</td><td style= "font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;">' + result.list[i].wind.speed + '</td></tr>';
+				sTxt += '<td></td><td>Wind Degree:</td><td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;">' + result.list[i].wind.deg + '</td></tr>';
 				sTxt += '</tr></tbody></table></div></td>';
 				
+				sTxt += '</tr>';
 				 }
 
 
-			 $('#weatherlist').append(sTxt);
+			 $('#weatherlist').html(sTxt);
         });
     });
 });
 				</script>
 			</head>
 			<body>
+			<h1 style="background: font-size:16px; font-weight:700;">Weather Application</h1>
+			<h4>Please enter the city and country to get the weather report!</h4>
+City <input type="text" id="City" name="City" value="" />
 Country <input type="text" id="Country" name="Country" value="" />
-ISO <input type="text" id="ISO" name="ISO" value="" />
-				<button>Get JSON data</button>
-
-				<div>
-				</div>
+				<button>Get Report</button>
+				<br><br><br>
 				<table id="weatherlist">
 					
 				</table>
